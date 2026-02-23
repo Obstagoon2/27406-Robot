@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ditto – FTC Team 27406 Impulse's 2025 competition robot. Specs, performance ratings, and media." />
+  <title>Ditto | Competition Bot 2025 · FTC Team 27406 Impulse</title>
+  <!-- Nasalization font (CDN) -->
+  <link href="https://fonts.cdnfonts.com/css/nasalization" rel="stylesheet" />
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Nasalization', sans-serif;
+      background: #0A0A0A;
+      color: #e0e0e0;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========== LAYOUT CONTAINER ========== */
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 3rem 1rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(0, 123, 255, 0.15) 0%, transparent 60%);
+      animation: heroGlow 6s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes heroGlow {
+      from { opacity: 0.7; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.1); }
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero h1 {
+      font-size: clamp(3rem, 12vw, 5.5rem);
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      margin: 0 0 0.5rem;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(0, 123, 255, 0.5);
+    }
+    .hero-subtitle {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0 0 0.25rem;
+      letter-spacing: 0.15em;
+    }
+    .hero-date {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0 0 2rem;
+    }
+    .btn-cta {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      color: #007BFF;
+      border: 2px solid #007BFF;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+    .btn-cta:hover {
+      background: rgba(0, 123, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+    }
+
+    /* ========== SECTION COMMON ========== */
+    section {
+      padding: 4rem 0;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      letter-spacing: 0.1em;
+      margin: 0 0 0.5rem;
+      color: #fff;
+    }
+    .section-subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 0 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* ========== BASIC SPECIFICATIONS (CARDS) ========== */
+    #specs .section-title { text-align: center; }
+    #specs .section-subtitle { text-align: center; }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .spec-card {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(0, 123, 255, 0.25);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    }
+    .spec-card:hover {
+      box-shadow: 0 0 24px rgba(0, 123, 255, 0.25);
+      border-color: rgba(0, 123, 255, 0.5);
+    }
+    .spec-card h3 {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #007BFF;
+      margin: 0 0 0.5rem;
+      font-weight: 400;
+    }
+    .spec-card p {
+      margin: 0;
+      font-size: 1rem;
+      color: #e0e0e0;
+    }
+    .spec-card ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: #e0e0e0;
+    }
+    .spec-card li { margin-bottom: 0.25rem; }
+
+    /* ========== PERFORMANCE RATINGS ========== */
+    .ratings-list {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .rating-item {
+      margin-bottom: 1.25rem;
+    }
+    .rating-item:last-child { margin-bottom: 0; }
+    .rating-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .rating-bar-wrap {
+      display: flex;
+      gap: 4px;
+      height: 12px;
+    }
+    .rating-segment {
+      flex: 1;
+      border-radius: 3px;
+      background: #2a2a2a;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .rating-segment.filled {
+      background: #007BFF;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .rating-item.visible .rating-segment.filled {
+      opacity: 1;
+      transform: scaleX(1);
+      transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.3s ease;
+    }
+    .rating-item.visible .rating-segment.filled:nth-child(1) { transition-delay: 0.05s; }
+    .rating-item.visible .rating-segment.filled:nth-child(2) { transition-delay: 0.1s; }
+    .rating-item.visible .rating-segment.filled:nth-child(3) { transition-delay: 0.15s; }
+    .rating-item.visible .rating-segment.filled:nth-child(4) { transition-delay: 0.2s; }
+    .rating-item.visible .rating-segment.filled:nth-child(5) { transition-delay: 0.25s; }
+
+    /* ========== VIDEO SECTION ========== */
+    .video-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .video-card {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(0, 123, 255, 0.25);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .video-card:hover {
+      box-shadow: 0 0 24px rgba(0, 123, 255, 0.25);
+      border-color: rgba(0, 123, 255, 0.5);
+    }
+    .video-card h3 {
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin: 0;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(0, 123, 255, 0.2);
+    }
+    .video-card .embed-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+    }
+    .video-card .embed-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ========== DYNAMIC MEDIA GALLERY ========== */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: #1a1a1a;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      box-shadow: inset 0 0 0 0 rgba(0, 123, 255, 0.3);
+      transition: box-shadow 0.3s ease;
+      pointer-events: none;
+    }
+    .gallery-item:hover::after {
+      box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+    }
+
+    /* ========== FOOTER ========== */
+    .site-footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid rgba(0, 123, 255, 0.2);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-inner page-wrap">
+      <h1>DITTO</h1>
+      <p class="hero-subtitle">Competition Bot • Season 2025 • Team 27406</p>
+      <p class="hero-date">Last Updated 2/5/2026</p>
+      <a href="#specs" class="btn-cta">View Specs</a>
+    </div>
+  </section>
+
+  <!-- ========== BASIC SPECIFICATIONS ========== -->
+  <section id="specs" class="specs-section" aria-labelledby="specs-heading">
+    <div class="page-wrap">
+      <h2 id="specs-heading" class="section-title">Basic Specifications</h2>
+      <p class="section-subtitle">Ditto — 2025 competition robot overview</p>
+      <div class="specs-grid">
+        <div class="spec-card">
+          <h3>Drivetrain</h3>
+          <p>Mecanum</p>
+        </div>
+        <div class="spec-card">
+          <h3>Weight</h3>
+          <p>20 lbs</p>
+        </div>
+        <div class="spec-card">
+          <h3>Dimensions</h3>
+          <p>17.5 in × 17.5 in × 17 in</p>
+        </div>
+        <div class="spec-card">
+          <h3>Intake &amp; Scoring Systems</h3>
+          <ul>
+            <li>Front Intake</li>
+            <li>Catapult</li>
+            <li>Intake to Catapult Transfer</li>
+          </ul>
+        </div>
+        <div class="spec-card">
+          <h3>Endgame Capabilities</h3>
+          <ul>
+            <li>Full Park</li>
+            <li>Self Lifting</li>
+            <li>Double Parking Capable</li>
+          </ul>
+        </div>
+        <div class="spec-card">
+          <h3>Technology &amp; Sensors</h3>
+          <ul>
+            <li>Odo</li>
+            <li>Encoders</li>
+            <li>Gyro</li>
+            <li>Pedro Pathing</li>
+          </ul>
+        </div>
+        <div class="spec-card">
+          <h3>Build Style</h3>
+          <p>Aluminum</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PERFORMANCE RATINGS ========== -->
+  <section id="ratings" class="ratings-section" aria-labelledby="ratings-heading">
+    <div class="page-wrap">
+      <h2 id="ratings-heading" class="section-title">Performance Ratings</h2>
+      <p class="section-subtitle">Pre-filled ratings (display only)</p>
+      <div class="ratings-list">
+        <div class="rating-item" data-rating="4">
+          <div class="rating-label"><span>Robot Speed</span><span>4 / 5</span></div>
+          <div class="rating-bar-wrap"><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment"></span></div>
+        </div>
+        <div class="rating-item" data-rating="5">
+          <div class="rating-label"><span>Driver Skill</span><span>5 / 5</span></div>
+          <div class="rating-bar-wrap"><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span></div>
+        </div>
+        <div class="rating-item" data-rating="5">
+          <div class="rating-label"><span>Robot Stability</span><span>5 / 5</span></div>
+          <div class="rating-bar-wrap"><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span></div>
+        </div>
+        <div class="rating-item" data-rating="4">
+          <div class="rating-label"><span>Auto Reliability</span><span>4 / 5</span></div>
+          <div class="rating-bar-wrap"><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment"></span></div>
+        </div>
+        <div class="rating-item" data-rating="4">
+          <div class="rating-label"><span>Endgame Reliability</span><span>4 / 5</span></div>
+          <div class="rating-bar-wrap"><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment"></span></div>
+        </div>
+        <div class="rating-item" data-rating="5">
+          <div class="rating-label"><span>Mechanical Reliability</span><span>5 / 5</span></div>
+          <div class="rating-bar-wrap"><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span><span class="rating-segment filled"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIDEO SECTION ========== -->
+  <section id="videos" class="video-section" aria-labelledby="videos-heading">
+    <div class="page-wrap">
+      <h2 id="videos-heading" class="section-title">Videos</h2>
+      <p class="section-subtitle">Walkthrough and match highlights</p>
+      <div class="video-cards">
+        <!-- REPLACE: Replace the src URL below with your full robot walkthrough YouTube embed URL (e.g. https://www.youtube.com/embed/VIDEO_ID) -->
+        <div class="video-card">
+          <h3>Full Robot Walkthrough</h3>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Full Robot Walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- REPLACE: Replace the src URL below with your Shorts embed URL (e.g. https://www.youtube.com/embed/SHORTS_VIDEO_ID) -->
+        <div class="video-card">
+          <h3>Match Short</h3>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Match Short" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DYNAMIC MEDIA GALLERY ========== -->
+  <!-- Add more images by duplicating the .gallery-item block below and updating the src (and optional alt). -->
+  <section id="gallery" class="gallery-section" aria-labelledby="gallery-heading">
+    <div class="page-wrap">
+      <h2 id="gallery-heading" class="section-title">Gallery</h2>
+      <p class="section-subtitle">Ditto in action</p>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="https://placehold.co/600x450/1a1a1a/007BFF?text=Ditto+1" alt="Ditto robot" loading="lazy" width="600" height="450" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://placehold.co/600x450/1a1a1a/007BFF?text=Ditto+2" alt="Ditto robot" loading="lazy" width="600" height="450" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://placehold.co/600x450/1a1a1a/007BFF?text=Ditto+3" alt="Ditto robot" loading="lazy" width="600" height="450" />
+        </div>
+        <!-- Add more images: copy the block above and change src (and alt). Gallery expands automatically. -->
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="page-wrap">Ditto · Competition Bot 2025 · FTC Team 27406 Impulse</div>
+  </footer>
+
+  <script>
+    // Smooth scroll for anchor (already enabled via CSS scroll-behavior; this ensures target is in view)
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        var id = this.getAttribute('href');
+        if (id === '#') return;
+        var el = document.querySelector(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Rating bars: fade-in when scrolled into view
+    (function() {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { rootMargin: '0px 0px -50px 0px', threshold: 0.2 });
+      document.querySelectorAll('.rating-item').forEach(function(item) {
+        observer.observe(item);
+      });
+    })();
+  </script>
+</body>
+</html>
