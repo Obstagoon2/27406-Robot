@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Ditto – FTC Team 27406 Impulse's 2025 competition robot. Specs, performance ratings, and media." />
   <title>Ditto | Competition Bot 2025 · FTC Team 27406 Impulse</title>
-  <!-- Nasalization font (CDN) -->
-  <link href="https://fonts.adobe.com/fonts/nasalization" rel="stylesheet" />
+  
   <style>
+    /* ===== Nasalization Local Font ===== */
+      @font-face {
+        font-family: 'Nasalization';
+        src: url('./assets/fonts/Nasalization Rg.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      
     /* ========== RESET & BASE ========== */
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -264,6 +272,51 @@
     .gallery-item:hover::after {
       box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
     }
+    /* ===== Masonry Layout Upgrade ===== */
+.gallery {
+  column-count: 3;
+  column-gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .gallery { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+  .gallery { column-count: 1; }
+}
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 1.25rem;
+  cursor: pointer;
+}
+
+/* ===== Lightbox ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0, 123, 255, 0.4);
+}
 
     /* ========== FOOTER ========== */
     .site-footer {
@@ -275,6 +328,59 @@
     }
   </style>
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const gallery = document.getElementById("dynamic-gallery");
+
+  fetch("./assets/images/gallery/gallery.json")
+    .then(res => res.json())
+    .then(data => {
+
+      // Auto-sort newest first (alphabetical reverse)
+      const sorted = data.images.sort().reverse();
+
+      sorted.forEach(file => {
+
+        const card = document.createElement("div");
+        card.className = "gallery-item";
+
+        const img = document.createElement("img");
+        img.src = `./assets/images/gallery/${file}`;
+        img.alt = file.replace(/[-_]/g, " ");
+        img.loading = "lazy";
+
+        card.appendChild(img);
+        gallery.appendChild(card);
+
+      });
+
+    });
+
+  /* ===== Lightbox Logic ===== */
+
+  const lightbox = document.createElement("div");
+  lightbox.className = "lightbox";
+  document.body.appendChild(lightbox);
+
+  const lightboxImg = document.createElement("img");
+  lightbox.appendChild(lightboxImg);
+
+  document.addEventListener("click", function (e) {
+
+    if (e.target.closest(".gallery-item img")) {
+      lightboxImg.src = e.target.src;
+      lightbox.classList.add("active");
+    }
+
+    if (e.target.classList.contains("lightbox")) {
+      lightbox.classList.remove("active");
+    }
+
+  });
+
+});
+</script>
 <body>
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" aria-label="Hero">
@@ -395,23 +501,12 @@
   </section>
 
   <!-- ========== DYNAMIC MEDIA GALLERY ========== -->
-  <!-- Add more images by duplicating the .gallery-item block below and updating the src (and optional alt). -->
   <section id="gallery" class="gallery-section" aria-labelledby="gallery-heading">
     <div class="page-wrap">
       <h2 id="gallery-heading" class="section-title">Gallery</h2>
       <p class="section-subtitle">Ditto in action</p>
-      <div class="gallery">
-        <div class="gallery-item">
-          <img src="https://placehold.co/600x450/1a1a1a/007BFF?text=Ditto+1" alt="Ditto robot" loading="lazy" width="600" height="450" />
-        </div>
-        <div class="gallery-item">
-          <img src="https://placehold.co/600x450/1a1a1a/007BFF?text=Ditto+2" alt="Ditto robot" loading="lazy" width="600" height="450" />
-        </div>
-        <div class="gallery-item">
-          <img src="https://placehold.co/600x450/1a1a1a/007BFF?text=Ditto+3" alt="Ditto robot" loading="lazy" width="600" height="450" />
-        </div>
-        <!-- Add more images: copy the block above and change src (and alt). Gallery expands automatically. -->
-      </div>
+
+      <div class="gallery" id="dynamic-gallery"></div>
     </div>
   </section>
 
